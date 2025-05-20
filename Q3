@@ -1,23 +1,28 @@
+
+//using binary search for this question
+// we can not use flot because it uses uses floating-point math but we do not want it 
 // Helper function to calculate base^exp with early stopping if result > m
+// time complexity O(n⋅logm)
 long long power(long long base, int exp, int m) {
     long long result = 1;
     for (int i = 0; i < exp; i++) {
         result *= base;
-        if (result > m) return result; // early exit to avoid overflow
+        if (result > m) return result; // base can not be more than m 
     }
     return result;
 }
-
+// we will run a binary search between 1 to m
 int NthRoot(int n, int m) {
     int low = 1, high = m;
     
     while (low <= high) {
         int mid = (low + high) / 2;
-        long long midPow = power(mid, n, m);
+        long long midPow = power(mid, n, m);//This computes mid^n using the helper we wrote
 
-        if (midPow == m) return mid;
-        else if (midPow < m) low = mid + 1;
-        else high = mid - 1;
+        if (midPow == m) return mid;        // Exact root found
+        else if (midPow < m) low = mid + 1; // Guess was too small
+        else high = mid - 1;                // Guess was too big
+
     }
 
     return -1; // no integer root found
