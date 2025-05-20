@@ -1,1 +1,104 @@
+//part1
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> result;
+
+        // Step 1: Sort the input array to apply two-pointer technique
+        sort(nums.begin(), nums.end());
+
+        int n = nums.size();
+
+        // Step 2: Loop through each element to fix the first element of the triplet
+        for (int i = 0; i < n - 2; i++) {
+            // Skip duplicates for the first number to avoid repeated triplets
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            int left = i + 1;        // Second pointer
+            int right = n - 1;       // Third pointer
+
+            // Step 3: Use two pointers to find two other numbers that sum to -nums[i]
+            while (left < right) {
+                int total = nums[i] + nums[left] + nums[right];
+
+                if (total == 0) {
+                    // Triplet found
+                    result.push_back({nums[i], nums[left], nums[right]});
+
+                    // Skip duplicate values for the second number
+                    while (left < right && nums[left] == nums[left + 1]) left++;
+                    // Skip duplicate values for the third number
+                    while (left < right && nums[right] == nums[right - 1]) right--;
+
+                    // Move both pointers after processing current triplet
+                    left++;
+                    right--;
+                }
+                else if (total < 0) {
+                    // Sum is too small, move left pointer to the right
+                    left++;
+                }
+                else {
+                    // Sum is too large, move right pointer to the left
+                    right--;
+                }
+            }
+        }
+
+        return result;
+    }
+};
+
+
+//part2
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        vector<vector<int>> result;
+
+        sort(nums.begin(), nums.end());  // Step 1: Sort the array
+        int n = nums.size();
+
+        // First loop: Fix the first number
+        for (int i = 0; i < n - 3; i++) {
+            // Skip duplicates for the first number
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+
+            // Second loop: Fix the second number
+            for (int j = i + 1; j < n - 2; j++) {
+                // Skip duplicates for the second number
+                if (j > i + 1 && nums[j] == nums[j - 1]) continue;
+
+                long long newTarget = (long long)target - nums[i] - nums[j];
+                int left = j + 1;
+                int right = n - 1;
+
+                // Two pointers for the remaining two numbers
+                while (left < right) {
+                    long long sum = (long long)nums[left] + nums[right];
+                    if (sum == newTarget) {
+                        result.push_back({nums[i], nums[j], nums[left], nums[right]});
+
+                        // Skip duplicates for the third number
+                        while (left < right && nums[left] == nums[left + 1]) left++;
+                        // Skip duplicates for the fourth number
+                        while (left < right && nums[right] == nums[right - 1]) right--;
+
+                        left++;
+                        right--;
+                    }
+                    else if (sum < newTarget) {
+                        left++;  // Increase the sum
+                    }
+                    else {
+                        right--;  // Decrease the sum
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+};
 
