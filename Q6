@@ -1,21 +1,31 @@
+//approach
+//Left to Right - top row
+//Top to Bottom - right column
+//Right to Left - bottom row
+//Bottom to Top - left column
+// repeat this spiral motion while shrinking 
+
 
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        vector<int> result;
+        vector<int> result;//stores the spiral-ordered elements
 
         if (matrix.empty()) return result;
 
-        int top = 0, bottom = matrix.size() - 1;
-        int left = 0, right = matrix[0].size() - 1;
+        int top = 0//starting row index, bottom = matrix.size() - 1//ending row index;
+        int left = 0//starting column index, right = matrix[0].size() - 1//ending column index;
 
         while (top <= bottom && left <= right) {
             // Traverse from Left to Right
+
+            //We move from column left to right along the top row, and collect the elements
             for (int i = left; i <= right; ++i)
                 result.push_back(matrix[top][i]);
             ++top;
 
             // Traverse from Top to Bottom
+           //We move from row top to bottom along the right column
             for (int i = top; i <= bottom; ++i)
                 result.push_back(matrix[i][right]);
             --right;
@@ -34,6 +44,7 @@ public:
                 ++left;
             }
         }
+//Time: O(m × n) 
 
         return result;
     }
