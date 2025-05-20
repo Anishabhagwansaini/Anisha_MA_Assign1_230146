@@ -1,19 +1,23 @@
+// using Dutch National Flag Algorithm
+//low = index to place the next 0
+//mid = current element being checked
+//high = index to place the next 2
 class Solution {
 public:
     void sortColors(vector<int>& nums) {
         int low = 0, mid = 0, high = nums.size() - 1;
 
-        while (mid <= high) {
+        while (mid <= high) {// keep checking elements as long as mid is within the range of the unsorted section
             if (nums[mid] == 0) {
-                swap(nums[low], nums[mid]);
+                swap(nums[low], nums[mid]);'//If the current number is 0, it needs to go to the front.
                 ++low;
                 ++mid;
             }
-            else if (nums[mid] == 1) {
-                ++mid;
+            else if (nums[mid] == 1) {//If it’s a 1, it’s already in the middle, so just move to the next.
+                ++mid;// no swap needed
             }
             else { // nums[mid] == 2
-                swap(nums[mid], nums[high]);
+                swap(nums[mid], nums[high]);//If it’s a 2, it needs to go to the end
                 --high;
             }
         }
