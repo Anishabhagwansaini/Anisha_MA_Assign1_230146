@@ -1,14 +1,21 @@
+//write points to the position where the next unique element should be written
+//Starts at index 1 because the first element is always unique in a sorted array
+
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        if (nums.empty()) return 0;
+        if (nums.empty()) return 0;//Checks if the array is empty
 
         int write = 1; // first element is always unique
+        //read pointer goes through the array from index 1 to the end
+        //It is used to read and compare elements with their previous element.
 
-        for (int read = 1; read < nums.size(); ++read) {
+        for (int read = 1; read < nums.size(); ++read) {//Checks if the current element is different from the previous one.
+
+
             if (nums[read] != nums[read - 1]) {
-                nums[write] = nums[read];
-                ++write;
+                nums[write] = nums[read];//// copy unique element to write index
+                ++write;//// move write pointer forward
             }
         }
 
